@@ -1,0 +1,41 @@
+import speedtest
+import tkinter as tk
+
+# Create a Speedtest object
+st = speedtest.Speedtest()
+
+# Create a GUI window
+root = tk.Tk()
+root.title("Speedtest Results")
+
+# Create a text widget to display the results
+result_text = tk.Text(root, height=10, width=50)
+result_text.pack()
+
+# Define a function to redirect the print statements to the text widget
+def redirect_print(*args):
+    # Convert all arguments to strings
+    text = " ".join(str(arg) for arg in args)
+
+    # Append the text to the text widget
+    result_text.insert(tk.END, text + "\n")
+    result_text.see(tk.END)  # Scroll to the end of the text widget
+
+# Redirect the standard output to the text widget
+import sys
+sys.stdout.write = redirect_print
+
+# Run the download speed test and print the results
+download_speed = st.download() / 1000000  # Convert bytes to megabits
+print(f"Download speed: {download_speed:.2f} Mbps")
+
+# Run the upload speed test and print the results
+upload_speed = st.upload() / 1000000  # Convert bytes to megabits
+print(f"Upload speed: {upload_speed:.2f} Mbps")
+
+# Get the ping time and print the results
+ping_time = st.results.ping
+print(f"Ping time: {ping_time:.2f} ms")
+
+# Start the GUI event loop
+root.mainloop()
