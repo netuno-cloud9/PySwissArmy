@@ -1,0 +1,14 @@
+import hashlib
+
+def create_rainbow_table(password, length):
+    rainbow_table = []
+    for i in range(length):
+        password_hash = hashlib.sha256(password.encode()).hexdigest()
+        rainbow_table.append((password, password_hash))
+        password = password_hash[:6] # reduz a senha para 6 caracteres
+    return rainbow_table
+
+# Exemplo de uso:
+password = "senha123"
+rainbow_table = create_rainbow_table(password, 100)
+print(rainbow_table)
