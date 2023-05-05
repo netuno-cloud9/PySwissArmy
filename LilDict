@@ -1,0 +1,16 @@
+import hashlib
+
+def force_password(hash_value, dictionary_file):
+    with open(dictionary_file, "r") as f:
+        for password in f:
+            password = password.strip()
+            password_hash = hashlib.sha256(password.encode()).hexdigest()
+            if password_hash == hash_value:
+                return password
+    return None
+
+# Exemplo de uso:
+hash_value = "5f4dcc3b5aa765d61d8327deb882cf99" # hash da senha "password"
+dictionary_file = "dictionary.txt"
+password = force_password(hash_value, dictionary_file)
+print(password)
