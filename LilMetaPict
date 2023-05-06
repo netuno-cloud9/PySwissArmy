@@ -1,0 +1,6 @@
+import exifread
+
+with open("image.jpg", "rb") as image_file:
+    tags = exifread.process_file(image_file)
+    for tag in tags:
+        print(tag, ":", tags[tag])
