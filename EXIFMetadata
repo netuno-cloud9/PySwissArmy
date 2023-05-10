@@ -1,0 +1,14 @@
+import exifread
+
+filename = "PieceOfCake.jpg"
+
+try:
+    with open(filename, "rb") as f:
+        exif_data = exifread.process_file(f)
+        if exif_data:
+            for tag, value in exif_data.items():
+                print(f"{tag}: {value}")
+        else:
+            print("The image file does not contain any EXIF metadata.")
+except (IOError, exifread.ExifReadError) as e:
+    print(f"Error reading file {filename}: {e}")
