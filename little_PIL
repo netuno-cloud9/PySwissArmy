@@ -1,0 +1,12 @@
+from PIL import Image
+
+filename = "image.jpg"
+
+try:
+    with Image.open(filename) as img:
+        width, height = img.size
+        color_mode = img.mode
+        print(f"Dimensions: {width} x {height}")
+        print(f"Color mode: {color_mode}")
+except IOError as e:
+    print(f"Error reading file {filename}: {e}")
