@@ -1,0 +1,30 @@
+import scapy.all as scapy
+
+def analyze_packet(packet):
+    if packet.haslayer(scapy.IP):
+        source_ip = packet[scapy.IP].src
+        dest_ip = packet[scapy.IP].dst
+
+        print(f"Source IP: {source_ip} --> Destination IP: {dest_ip}")
+
+        if packet.haslayer(scapy.TCP):
+            source_port = packet[scapy.TCP].sport
+            dest_port = packet[scapy.TCP].dport
+
+            print(f"Source Port: {source_port} --> Destination Port: {dest_port}")
+
+            if packet.haslayer(scapy.Raw):
+                payload = packet[scapy.Raw].load.decode("utf-8", errors="replace")
+                print("Payload:")
+                print(payload)
+                print("=" * 50)
+
+def main():
+    print("Network Packet Analyzer")
+    print("=" * 50)
+    print("Analyzing network packets...")
+
+    scapy.sniff(filter="ip", prn=analyze_packet)
+
+if __name__ == "__main__":
+    main()
