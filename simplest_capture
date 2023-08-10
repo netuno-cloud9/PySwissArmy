@@ -1,0 +1,7 @@
+import scapy.all as scapy
+
+def sniff_packet(packet):
+    if packet.haslayer(scapy.Raw):
+        print(packet[scapy.Raw].load)
+
+scapy.sniff(filter="tcp", prn=sniff_packet)
